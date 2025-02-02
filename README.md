@@ -1,50 +1,46 @@
-# Selenium Grid con Docker Compose
+# Automated Selenium Grid with Docker Compose
+Este proyecto proporciona una implementación de un Selenium Grid utilizando Docker Compose para realizar pruebas distribuidas en un entorno de contenedores. El proyecto está diseñado para facilitar la ejecución de pruebas automatizadas en múltiples navegadores de manera escalable, utilizando Selenium Hub y nodos de Chrome.
 
-Este proyecto demuestra cómo configurar una Selenium Grid para pruebas distribuidas usando Docker Compose. Incluye un contenedor de Selenium Hub, varios contenedores de navegadores Chrome y un contenedor de servicio web ("web") que ejecuta tu script de prueba (`example.py`).
+## Requisitos Previos
 
-### Requisitos previos
+- **Docker** instalado y funcionando. [Instalar Docker](https://www.docker.com/)
+- **Docker Compose** instalado. [Instalar Docker Compose](https://docs.docker.com/compose/install/)
 
-- Docker instalado y funcionando ([https://www.docker.com/](https://www.docker.com/))
-- Docker Compose instalado y funcionando ([https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/))
-
-### Estructura del proyecto
-
+## Estructura del Proyecto
+Esta es la estructura del proyecto, dentro de la carpeta src puede ir el codigo de tu proyecto en python que use el Grid:
 ```
-docker-compose.yml  # Define los servicios para Selenium Grid
-Dockerfile          # Construye la imagen del servicio "web"
-src/
-  - example.py      # Tu script de prueba Selenium
-  - requirements.txt # Dependencias para el servicio "web"
+selenium-grid-docker/
+├── docker-compose.yml       # Define los servicios para Selenium Grid
+├── Dockerfile               # Construye la imagen del servicio "web"
+├── src/
+│   ├── example.py           # Script de prueba Selenium
+│   ├── requirements.txt     # Dependencias de Python
+├── README.md                # Documentación del proyecto
+├── .gitignore               # Archivos que no se deben incluir en el repositorio
 ```
 
-2. **Iniciar la Selenium Grid**
 
+## Instalación
+
+1. **Clonar el repositorio:**
+
+    ```bash
+    git clone https://github.com/tu-usuario/selenium-grid-docker.git
+    cd selenium-grid-docker
+    ```
+
+2. **Construir y ejecutar los contenedores con Docker Compose:**
     ```bash
     docker-compose up -d
     ```
-    - Este comando construye la imagen del servicio "web" (si es necesario) y ejecuta todos los contenedores en modo detached (separado).
+
+    Este comando construye las imágenes necesarias y ejecuta todos los contenedores en segundo plano.
 
 ### Explicación de los archivos
-
-**docker-compose.yml**
-
-- Define servicios para Selenium Hub (`hub`) y navegadores Chrome (`chrome`) con capacidad de escalado.
-- Configura puertos, variables de entorno y dependencias entre servicios.
-- Puedes escalar la cantidad de navegadores Chrome ajustando la configuración `replicas` en el archivo `docker-compose.yml` para el servicio `chrome`.
-
-**Dockerfile**
-
-- Construye la imagen de Python 3.12 para el servicio "web".
-- Instala dependencias de Python desde `requirements.txt`.
-- Copia tu script de prueba (`example.py`) y los archivos del proyecto.
-- Establece el comando para ejecutar `example.py` cuando se inicia el contenedor.
-
-**example.py** (ubicado en `src/`)
-
-- Demuestra el uso de Selenium con un WebDriver remoto (Selenium Hub).
-- Inicia un navegador Chrome a través del hub.
-- Navega a una página web, encuentra un elemento e imprime el título.
-- Cierra el navegador.
+- **docker-compose.yml**: Define los servicios de Selenium Hub, nodos de Chrome y el servicio web que ejecuta las pruebas
+- **Dockerfile**: Construye la imagen del contenedor web con Python y las dependencias necesarias.
+- **src/example.py**: Script que realiza una prueba simple en un navegador Chrome controlado por Selenium.
+- **requirements.txt**: Contiene las dependencias necesarias, como Selenium.
 
 ### Variables de entorno
 
@@ -57,3 +53,5 @@ Se utilizan las siguientes variables de entorno en este proyecto:
 - **SE_EVENT_BUS_PUBLISH_PORT (Chrome):** Establece el puerto de publicación para el bus de eventos.
 - **SE_EVENT_BUS_SUBSCRIBE_PORT (Chrome):** Establece el puerto de suscripción para el bus de eventos.
 
+### Contribuciones
+Si deseas contribuir a este proyecto, por favor realiza un fork del repositorio y abre un pull request con tus cambios.

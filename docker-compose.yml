@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   hub:
     image: selenium/hub:latest
@@ -9,6 +11,7 @@ services:
       - "4444:4444"
     environment:
       - SE_ENABLE_TRACING=true
+
   chrome:
     image: selenium/node-chrome:latest
     shm_size: 2gb
@@ -23,6 +26,7 @@ services:
       - SE_EVENT_BUS_HOST=hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+
   web:
     build: .
     command: tail -f /dev/null

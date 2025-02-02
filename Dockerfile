@@ -1,10 +1,14 @@
-FROM python:3.12-slim
+# Utiliza una imagen base de Python 3.12
+FROM python:3.12
 
+# Establece el directorio de trabajo en el contenedor
 WORKDIR /home/user
 
-COPY ./src/requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Copia los archivos del proyecto al contenedor
+COPY ./src /home/user
 
-COPY ./src .
+# Instala las dependencias desde requirements.txt
+RUN pip install -r requirements.txt
 
-CMD ["python", "/home/user/example.py"]
+# Establece el comando predeterminado
+CMD ["tail", "-f", "/dev/null"]
